@@ -1,0 +1,333 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: "Versailles";
+  src:
+    url("./assets/versailles.woff2") format("woff2"),
+    url("./assets/versailles.woff") format("woff");
+  font-weight: 400 700;
+  font-style: normal italic;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Versailles", Georgia, serif;
+
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-background: var(--background);
+
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.125rem;
+  /* Studio UMA: azul #084A70, dourado #C59017 e neutros minerais. */
+  --background: #f7f4ee;
+  --foreground: #084a70;
+  --card: #fbf9f4;
+  --card-foreground: #084a70;
+  --popover: oklch(0.995 0.009 85);
+  --popover-foreground: oklch(0.416 0.0622 251.85);
+  --primary: #c59017;
+  --primary-foreground: #062f49;
+  --secondary: #084a70;
+  --secondary-foreground: oklch(0.955 0.012 90);
+  --muted: #eeeae1;
+  --muted-foreground: #64747d;
+  --accent: #c59017;
+  --accent-foreground: #062f49;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: rgb(8 74 112 / 18%);
+  --input: rgb(8 74 112 / 24%);
+  --ring: #c59017;
+
+  --navy: #084a70;
+  --navy-deep: #052f49;
+  --navy-foreground: #f8f4eb;
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.76 0.1 100.18);
+  --chart-5: oklch(0.72 0.1 100.18);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.3 0.05 251.85);
+  --foreground: oklch(0.955 0.012 90);
+  --card: oklch(0.26 0.045 250);
+  --card-foreground: oklch(0.955 0.012 90);
+  --popover: oklch(0.26 0.045 250);
+  --popover-foreground: oklch(0.955 0.012 90);
+  --primary: oklch(0.78 0.13 100.18);
+  --primary-foreground: oklch(0.3 0.05 251.85);
+  --secondary: oklch(0.416 0.0622 251.85);
+  --secondary-foreground: oklch(0.955 0.012 90);
+  --muted: oklch(0.416 0.0622 251.85);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: oklch(0.78 0.13 100.18);
+  --accent-foreground: oklch(0.3 0.05 251.85);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.78 0.13 100.18);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.76 0.1 100.18);
+  --chart-5: oklch(0.72 0.1 100.18);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  section h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  a,
+  button {
+    outline-offset: 4px;
+  }
+}
+
+/* Gesto caligráfico dos CTAs: desenha uma vez, aponta e respira. */
+@keyframes cta-arrow-draw {
+  0%,
+  8% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  48%,
+  82% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  94%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cta-arrow-reveal {
+  0%,
+  43% {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  52%,
+  82% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cta-arrow-origin {
+  0%,
+  8%,
+  94%,
+  100% {
+    opacity: 0;
+  }
+  14%,
+  82% {
+    opacity: 0.75;
+  }
+}
+
+.cta-arrow__line {
+  stroke-dasharray: 100;
+  animation: cta-arrow-draw 4.2s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+}
+
+.cta-arrow__head {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cta-arrow-reveal 4.2s ease-out infinite;
+}
+
+.cta-arrow__origin {
+  animation: cta-arrow-origin 4.2s ease-in-out infinite;
+}
+
+.cta-callout:hover .cta-arrow__line,
+.cta-callout:hover .cta-arrow__head,
+.cta-callout:hover .cta-arrow__origin {
+  animation-duration: 2.8s;
+}
+
+/* Cursor do efeito de digitação. */
+@keyframes typing-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.typing-caret {
+  animation: typing-caret-blink 1s steps(1) infinite;
+}
+
+/* Fundo parallax (efeito janela) que funciona no mobile, inclusive iOS.
+   Técnica: camada com position:fixed recortada pelo ancestral com
+   clip: rect(). O recorte limita a pintura à área da seção, mas a
+   camada não rola com a página — igual ao background-attachment:fixed.
+   NÃO usar clip-path, transform ou filter no ancestral .parallax-clip,
+   pois isso vira containing block e quebra o efeito. */
+.parallax-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip: rect(0, auto, auto, 0);
+}
+
+.parallax-fixed-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* Promove a camada para a GPU: o scroll vira composição em vez
+     de repintura, o que elimina o travamento no mobile. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-fixed-bg {
+    position: absolute;
+    height: 100%;
+  }
+
+  .typing-caret {
+    animation: none;
+    opacity: 0;
+  }
+
+  .cta-arrow__line,
+  .cta-arrow__head,
+  .cta-arrow__origin {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+
+  [data-timeline-dot],
+  [data-timeline-year],
+  [data-timeline-text] {
+    opacity: 1 !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
