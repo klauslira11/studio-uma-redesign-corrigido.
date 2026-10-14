@@ -1,0 +1,84 @@
+MIME-Version: 1.0
+Date: Wed, 14 Oct 2026 11:48:42 -0300
+Message-ID: <CAK8k=-v1_qseQ9xjekV3RjMnxxMzeoOm8d=afTHz_P94FMdXhA@mail.gmail.com>
+Subject: =?UTF-8?Q?dom=C3=ADnio_hostinger_com_erro_de_DNS=2E?=
+From: Klaus Klaerner <klausklaerner@gmail.com>
+To: "support@hostinger.com" <support@hostinger.com>
+Content-Type: multipart/alternative; boundary="00000000000004faa2065dce0793"
+
+--00000000000004faa2065dce0793
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Ol=C3=A1, equipe Hostinger.
+
+Meu nome =C3=A9 Klaus, sou programador e respons=C3=A1vel pela publica=C3=
+=A7=C3=A3o do site de
+uma cliente no dom=C3=ADnio umastudio.com.br.
+
+Estou enfrentando um bloqueio na configura=C3=A7=C3=A3o da zona DNS que imp=
+ede
+concluir o apontamento para o GitHub Pages. Ao salvar as altera=C3=A7=C3=B5=
+es, o
+painel retorna:
+
+=E2=80=9CDNS record validation error: RRset umastudio.com.br IN ALIAS must =
+not be
+used with A on the same name.=E2=80=9D
+
+A mensagem indica uma incompatibilidade entre um registro ALIAS e registros
+A associados ao dom=C3=ADnio principal. Preciso esclarecer se o ALIAS foi
+provisionado automaticamente pela Hostinger e se existe alguma configura=C3=
+=A7=C3=A3o
+vinculada ao dom=C3=ADnio que possa recri=C3=A1-lo ap=C3=B3s a remo=C3=A7=
+=C3=A3o.
+
+A configura=C3=A7=C3=A3o pretendida utiliza registros A no dom=C3=ADnio pri=
+ncipal e um
+CNAME para www, apontando para klauslira11.github.io. Solicito uma an=C3=A1=
+lise
+da zona DNS para identificar os registros conflitantes e orientar a
+corre=C3=A7=C3=A3o sem comprometer eventuais servi=C3=A7os de e-mail ou ver=
+ifica=C3=A7=C3=B5es
+existentes.
+
+Esse bloqueio est=C3=A1 impedindo a disponibiliza=C3=A7=C3=A3o do site no d=
+om=C3=ADnio da
+cliente. Pe=C3=A7o que confirmem a configura=C3=A7=C3=A3o necess=C3=A1ria e=
+, caso a falha
+persista mesmo com registros compat=C3=ADveis, encaminhem o caso =C3=A0 equ=
+ipe
+t=C3=A9cnica respons=C3=A1vel pelo gerenciamento de DNS.
+
+Atenciosamente,
+Klaus
+
+--00000000000004faa2065dce0793
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p>Ol=C3=A1, equipe Hostinger.</p><p>Meu nome =C3=A9 Klaus=
+, sou programador e respons=C3=A1vel pela publica=C3=A7=C3=A3o do site de u=
+ma cliente no dom=C3=ADnio <a href=3D"http://umastudio.com.br">umastudio.co=
+m.br</a>.</p><p>Estou enfrentando um bloqueio na configura=C3=A7=C3=A3o da =
+zona DNS que impede concluir o apontamento para o GitHub Pages. Ao salvar a=
+s altera=C3=A7=C3=B5es, o painel retorna:</p><p>=E2=80=9CDNS record validat=
+ion error: RRset <a href=3D"http://umastudio.com.br">umastudio.com.br</a> I=
+N ALIAS must not be used with A on the same name.=E2=80=9D</p><p>A mensagem=
+ indica uma incompatibilidade entre um registro ALIAS e registros A associa=
+dos ao dom=C3=ADnio principal. Preciso esclarecer se o ALIAS foi provisiona=
+do automaticamente pela Hostinger e se existe alguma configura=C3=A7=C3=A3o=
+ vinculada ao dom=C3=ADnio que possa recri=C3=A1-lo ap=C3=B3s a remo=C3=A7=
+=C3=A3o.</p><p>A configura=C3=A7=C3=A3o pretendida utiliza registros A no d=
+om=C3=ADnio principal e um CNAME para www, apontando para <a href=3D"http:/=
+/klauslira11.github.io">klauslira11.github.io</a>. Solicito uma an=C3=A1lis=
+e da zona DNS para identificar os registros conflitantes e orientar a corre=
+=C3=A7=C3=A3o sem comprometer eventuais servi=C3=A7os de e-mail ou verifica=
+=C3=A7=C3=B5es existentes.</p><p>Esse bloqueio est=C3=A1 impedindo a dispon=
+ibiliza=C3=A7=C3=A3o do site no dom=C3=ADnio da cliente. Pe=C3=A7o que conf=
+irmem a configura=C3=A7=C3=A3o necess=C3=A1ria e, caso a falha persista mes=
+mo com registros compat=C3=ADveis, encaminhem o caso =C3=A0 equipe t=C3=A9c=
+nica respons=C3=A1vel pelo gerenciamento de DNS.</p><p>Atenciosamente,<br>K=
+laus</p></div>
+
+--00000000000004faa2065dce0793--
