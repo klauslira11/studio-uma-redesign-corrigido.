@@ -11,7 +11,7 @@
 //   (use prefixos numéricos como 01-, 02- para ordenar).
 // - O título de cada foto é gerado a partir do nome do
 //   arquivo (ex: 01-salao-blush.jpg vira "Salao Blush").
-// - A grade mantém 3 colunas no PC e no mobile,
+// - A grade mantém 3 colunas no PC e 2 no mobile,
 //   independente da quantidade de fotos.
 // ============================================================
 

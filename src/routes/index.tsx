@@ -282,12 +282,12 @@ function LandingPage() {
           <ProjectsShowcase />
         </section>
 
-        <section className="mx-auto grid max-w-[1480px] grid-cols-3 gap-2 px-5 pb-20 sm:gap-3 sm:px-8 lg:px-12 lg:pb-36">
+        <section className="mx-auto grid max-w-[1480px] grid-cols-2 gap-3 px-5 pb-20 sm:px-8 lg:grid-cols-3 lg:px-12 lg:pb-36">
           {galeria.map((item, index) => (
             <div
               key={item.title}
               className={`group relative aspect-[4/3] overflow-hidden bg-navy ${
-                index % 3 === 1 ? "mt-6 lg:mt-12" : ""
+                index % 3 === 1 ? "lg:mt-12" : ""
               }`}
             >
               <img
