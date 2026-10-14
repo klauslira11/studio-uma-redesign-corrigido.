@@ -1,0 +1,69 @@
+# Publica o site estático no GitHub Pages (domínio: www.umastudio.com.br).
+#
+# Como funciona:
+# - NITRO_PRESET=github-pages faz o `npm run build` gerar saída 100% estática
+#   (HTML pré-renderizado + assets) em .output/public, sem servidor.
+# - O conteúdo de public/ (inclui CNAME e .nojekyll) é copiado para a saída.
+# - actions/deploy-pages publica essa pasta; o arquivo CNAME preserva o domínio.
+#
+# Segredos necessários (Settings → Secrets and variables → Actions):
+# - VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY (chave pública/anon —
+#   feita para uso no navegador; a service-role NUNCA entra aqui).
+# O build funciona mesmo sem eles (o formulário de leads usa WhatsApp e o
+# cliente Supabase não é importado pelas rotas), mas defina-os para o futuro.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build static site
+        run: npm run build
+      - name: Verify Pages output
+        run: |
+          test -f .output/public/index.html || (echo "index.html ausente em .output/public" && exit 1)
+          test -f .output/public/CNAME || (echo "CNAME ausente em .output/public" && exit 1)
+          cat .output/public/CNAME
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
