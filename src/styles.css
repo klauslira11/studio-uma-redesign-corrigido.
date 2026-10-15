@@ -331,3 +331,41 @@
     box-shadow: none !important;
   }
 }
+
+/* Modo leve automático (classe `low-fx` aplicada via useLowFx em aparelho
+   fraco ou rede limitada). Desliga os efeitos mais caros para a GPU sem mudar
+   o conteúdo: desktop e celular capaz nunca recebem esta classe. */
+.low-fx .parallax-fixed-bg {
+  position: absolute;
+  height: 100%;
+  transform: none;
+}
+
+.low-fx .typing-caret {
+  animation: none;
+  opacity: 0;
+}
+
+.low-fx .cta-arrow__line,
+.low-fx .cta-arrow__head,
+.low-fx .cta-arrow__origin {
+  animation: none;
+  opacity: 1;
+  stroke-dashoffset: 0;
+  transform: none;
+}
+
+.low-fx [data-timeline-dot],
+.low-fx [data-timeline-year],
+.low-fx [data-timeline-text] {
+  opacity: 1 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.low-fx .backdrop-blur,
+.low-fx .backdrop-blur-sm,
+.low-fx .backdrop-blur-md {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

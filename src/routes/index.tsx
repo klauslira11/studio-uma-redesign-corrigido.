@@ -11,11 +11,11 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import hero from "../assets/hero.png";
+import hero from "../assets/hero.webp";
 import herom from "../assets/herom.jpg";
 import logo from "../assets/logo.png";
-import logo1 from "../assets/logo1.png";
-import cabecalhoBg from "../assets/cabeçalho.png";
+import logo1 from "../assets/logo1.webp";
+import cabecalhoBg from "../assets/cabecalho.webp";
 import slogan from "../assets/slogan.jpg";
 import whatsImg from "../assets/whats.webp";
 import antesImg from "../assets/ad/1.jpg";
@@ -24,6 +24,7 @@ import { galeria } from "../data/galeria";
 import { ProjectsShowcase } from "../components/projects-showcase";
 import { Depoimentos } from "../components/depoimentos";
 import { BeforeAfter } from "../components/before-after";
+import { useLowFx } from "../hooks/use-low-fx";
 import {
   Accordion,
   AccordionContent,
@@ -125,7 +126,8 @@ function TextoDigitado({ texto, className = "" }: { texto: string; className?: s
   const [n, setN] = useState(0);
   const reduzido =
     typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      document.documentElement.classList.contains("low-fx"));
 
   useEffect(() => {
     const el = ref.current;
@@ -168,6 +170,8 @@ function TextoDigitado({ texto, className = "" }: { texto: string; className?: s
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  useLowFx();
 
   useEffect(() => {
     const onScroll = () => {
@@ -180,6 +184,15 @@ function LandingPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox]);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
       <header
@@ -191,7 +204,7 @@ function LandingPage() {
       >
         <div className="mx-auto flex max-w-[1480px] items-center justify-between border-b border-white/25 pb-4 text-white">
           <a href="#inicio" className="transition-opacity hover:opacity-70">
-            <img src={logo} alt="Studio UMA" className="h-8 w-auto object-contain sm:h-10" />
+            <img src={logo} alt="Studio UMA" decoding="async" className="h-8 w-auto object-contain sm:h-10" />
           </a>
           <nav className="hidden items-center gap-9 text-[9px] font-semibold uppercase tracking-[0.28em] lg:flex">
             <a href="#projetos" className="hover:text-primary">
@@ -284,19 +297,22 @@ function LandingPage() {
 
         <section className="mx-auto grid max-w-[1480px] grid-cols-2 gap-3 px-5 pb-20 sm:px-8 lg:grid-cols-3 lg:px-12 lg:pb-36">
           {galeria.map((item, index) => (
-            <div
+            <button
               key={item.title}
-              className={`group relative aspect-[4/3] overflow-hidden bg-navy ${
+              type="button"
+              onClick={() => setLightbox(index)}
+              aria-label={`Ampliar foto ${item.title}`}
+              className={`group relative aspect-[4/3] cursor-zoom-in overflow-hidden bg-navy p-0 text-left ${
                 index % 3 === 1 ? "lg:mt-12" : ""
               }`}
             >
               <img
                 src={item.image}
                 alt={item.title}
-                loading="lazy"
+                decoding="async" loading="lazy"
                 className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035] group-hover:opacity-80"
               />
-            </div>
+            </button>
           ))}
         </section>
 
@@ -354,7 +370,7 @@ function LandingPage() {
                   <img
                     src={FOTO_FUNDADORAS}
                     alt="Laura Uemura e Marina Mendes, fundadoras do Studio UMA"
-                    loading="lazy"
+                    decoding="async" loading="lazy"
                     className="h-full w-full rounded-full object-cover"
                   />
                 ) : (
@@ -420,7 +436,7 @@ function LandingPage() {
             <img
               src={logo1}
               alt="Studio UMA"
-              loading="lazy"
+              decoding="async" loading="lazy"
               className="h-auto w-44 object-contain sm:w-56 lg:w-64"
             />
           </div>
@@ -443,7 +459,7 @@ function LandingPage() {
                     <img
                       src={FOTO_LAURA}
                       alt="Laura Uemura"
-                      loading="lazy"
+                      decoding="async" loading="lazy"
                       className="h-full w-full rounded-full object-cover object-[50%_25%]"
                     />
                   ) : (
@@ -471,7 +487,7 @@ function LandingPage() {
                     <img
                       src={FOTO_MARINA}
                       alt="Marina Mendes"
-                      loading="lazy"
+                      decoding="async" loading="lazy"
                       className="h-full w-full rounded-full object-cover object-[50%_25%]"
                     />
                   ) : (
@@ -640,6 +656,32 @@ function LandingPage() {
         </div>
       </footer>
 
+      {lightbox !== null && galeria[lightbox] && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Foto ampliada: ${galeria[lightbox].title}`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-md sm:p-8"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="Fechar foto ampliada"
+            className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:right-6 sm:top-6"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <img
+            src={galeria[lightbox].image}
+            alt={galeria[lightbox].title}
+            decoding="async"
+            className="max-h-[90dvh] w-auto max-w-full rounded-sm object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
+
       <a
         href={WHATSAPP_URL}
         target="_blank"
@@ -652,7 +694,7 @@ function LandingPage() {
           src={whatsImg}
           alt=""
           aria-hidden="true"
-          loading="lazy"
+          decoding="async" loading="lazy"
           className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 object-contain opacity-0 transition-opacity group-hover:opacity-100 sm:h-7 sm:w-7"
         />
       </a>

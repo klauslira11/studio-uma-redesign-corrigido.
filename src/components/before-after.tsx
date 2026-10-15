@@ -90,7 +90,7 @@ export function BeforeAfter({
       <img
         src={after}
         alt={afterAlt}
-        loading="lazy"
+        decoding="async" loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
@@ -99,7 +99,7 @@ export function BeforeAfter({
       <img
         src={before}
         alt={beforeAlt}
-        loading="lazy"
+        decoding="async" loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         draggable={false}

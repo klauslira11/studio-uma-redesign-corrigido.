@@ -201,7 +201,7 @@ export function ProjectsShowcase() {
                     className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.025] ${
                       activeProject === index ? "scale-100" : "scale-[0.94]"
                     }`}
-                    loading="lazy"
+                    decoding="async" loading="lazy"
                     width={900}
                     height={1100}
                   />

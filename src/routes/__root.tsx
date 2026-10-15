@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import heroImg from "../assets/hero.webp";
+import heromImg from "../assets/herom.jpg";
 
 function NotFoundComponent() {
   return (
@@ -117,6 +119,9 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR">
       <head>
         <HeadContent />
+        {/* Hero do topo com prioridade máxima: evita a foto "demorar a aparecer". */}
+        <link rel="preload" as="image" href={heromImg} media="(max-width: 1023px)" fetchPriority="high" />
+        <link rel="preload" as="image" href={heroImg} media="(min-width: 1024px)" fetchPriority="high" />
       </head>
       <body>
         {children}
