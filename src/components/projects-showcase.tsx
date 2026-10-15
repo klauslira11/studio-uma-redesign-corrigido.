@@ -32,12 +32,20 @@ function fotosDoProjeto(pasta: string): string[] {
     .map(([, url]) => url);
 }
 
+type ProjectInfo = {
+  area: string;
+  programa: string;
+  localizacao: string;
+  ano: string;
+};
+
 type Project = {
   name: string;
   detail: string;
   description: string;
   cover: string;
   images: string[];
+  info: ProjectInfo;
 };
 
 function montarProjeto(
@@ -45,9 +53,10 @@ function montarProjeto(
   pasta: string,
   detail: string,
   description: string,
+  info: ProjectInfo,
 ): Project {
   const images = fotosDoProjeto(pasta);
-  return { name, detail, description, cover: images[2] ?? images[0] ?? "", images };
+  return { name, detail, description, cover: images[2] ?? images[0] ?? "", images, info };
 }
 
 const projects: Project[] = [
@@ -56,54 +65,63 @@ const projects: Project[] = [
     "Casa Alba",
     "Guaíra / SP",
     "Residência contemporânea que integra conforto, funcionalidade e elegância. A composição de texturas e materiais cria uma atmosfera acolhedora, equilibrando modernidade e a personalidade dos moradores.",
+    { area: "118 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2025" },
   ),
   montarProjeto(
     "Clínica Delicatta",
     "Clínica Delicatta",
     "Clínica de estética",
     "Ampliação da edificação e desenvolvimento completo dos interiores de uma clínica de estética. Ambientes que unem conforto, sofisticação e funcionalidade, com arquitetura contemporânea, linhas leves, materiais naturais e iluminação cuidadosamente planejada.",
+    { area: "40 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2025" },
   ),
   montarProjeto(
     "Recepção Bela",
     "Recepção Bela",
     "Recepção de clínica",
     "Primeiro contato entre a clínica e seus pacientes, projetado para transmitir leveza, elegância e acolhimento. Formas curvas, iluminação indireta e paleta de tons claros criam uma atmosfera sofisticada e atemporal.",
+    { area: "20 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
     "Trio",
     "Trio",
     "Dormitórios",
     "Cada um dos três dormitórios foi projetado para refletir a personalidade e as necessidades de seus moradores, equilibrando conforto, funcionalidade e estética em ambientes acolhedores e atemporais.",
+    { area: "45 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
     "Quarto Serene",
     "Quarto Serene",
     "Dormitório adolescente",
     "Dormitório que reflete a personalidade do adolescente, unindo delicadeza, funcionalidade e design contemporâneo. Cores neutras e marcenaria planejada criam um espaço confortável, organizado e acolhedor.",
+    { area: "9 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
     "Barbearia Essencial",
     "Barbearia Essencial",
     "Barbearia",
     "Transformação da barbearia em um espaço de convivência. Design moderno e sofisticado com marcenaria de cores sóbrias, criando uma atmosfera autêntica que reforça o conforto do ambiente.",
+    { area: "24 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
     "Dois Tons",
     "Dois Tons",
     "Clínica de beleza e dormitório",
     "Projeto desenvolvido para uma clínica de beleza e um dormitório, unindo sofisticação, conforto e funcionalidade. Tons neutros, marcenaria planejada e iluminação sofisticada tornam cada espaço harmonioso.",
+    { area: "40 m²", programa: "Comercial/Residencial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
     "Salão Blush",
     "Salão Blush",
     "Comercial · Guaíra-SP · 2025 · 35 m²",
     "Projeto de interiores para salão de beleza, desenvolvido para traduzir a identidade da marca por meio de uma atmosfera acolhedora, elegante e funcional, proporcionando conforto e uma experiência única aos clientes.",
+    { area: "35 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2025" },
   ),
   montarProjeto(
     "Quarto Imagine",
     "Quarto Imagine",
     "Residencial · Guaíra-SP · 2026 · 9 m²",
     "Projetado para acompanhar o universo infantil, este dormitório combina funcionalidade, conforto e diversão em um ambiente acolhedor. A marcenaria planejada, a paleta de cores suaves e os detalhes lúdicos foram cuidadosamente pensados para estimular a imaginação da criança, criando um espaço agradável para brincar, estudar e descansar.",
+    { area: "9 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
 ];
 
@@ -112,6 +130,7 @@ export function ProjectsShowcase() {
   const [activeProject, setActiveProject] = useState(0);
   const [openProject, setOpenProject] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [fullscreen, setFullscreen] = useState(false);
   const dragStart = useRef<{ x: number } | null>(null);
   const lastWheel = useRef(0);
   const modalWheel = useRef(0);
@@ -134,6 +153,7 @@ export function ProjectsShowcase() {
   const showProject = (project: Project) => {
     setOpenProject(project);
     setActiveImage(0);
+    setFullscreen(false);
   };
 
   const changeImage = (direction: number) => {
@@ -153,6 +173,7 @@ export function ProjectsShowcase() {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
     if (Math.abs(dx) > 50) changeImage(dx < 0 ? 1 : -1);
+    else if (Math.abs(dx) <= 8) setFullscreen(true);
   };
 
   return (
@@ -261,10 +282,16 @@ export function ProjectsShowcase() {
         </div>
       </Carousel>
 
-      <Dialog open={Boolean(openProject)} onOpenChange={(open) => !open && setOpenProject(null)}>
+      <Dialog open={Boolean(openProject)} onOpenChange={(open) => !open && (setOpenProject(null), setFullscreen(false))}>
         <DialogContent
           showCloseButton={false}
           className="h-[90dvh] max-h-none w-[90vw] max-w-none gap-0 overflow-hidden rounded-2xl border-0 bg-background p-0 text-foreground"
+          onEscapeKeyDown={(event) => {
+            if (fullscreen) {
+              event.preventDefault();
+              setFullscreen(false);
+            }
+          }}
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") changeImage(-1);
             if (event.key === "ArrowRight") changeImage(1);
@@ -306,7 +333,7 @@ export function ProjectsShowcase() {
 
                 <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1.6fr)_minmax(280px,0.65fr)] lg:gap-5">
                   <div
-                    className="relative h-[30dvh] min-h-0 touch-pan-y select-none overflow-hidden rounded-2xl border border-card/60 bg-muted shadow-2xl sm:h-[32dvh] lg:h-auto"
+                    className="relative h-[30dvh] min-h-0 touch-pan-y cursor-zoom-in select-none overflow-hidden rounded-2xl border border-card/60 bg-muted shadow-2xl sm:h-[32dvh] lg:h-auto"
                     onTouchStart={onTouchStart}
                     onTouchEnd={onTouchEnd}
                     onPointerDown={(event) => {
@@ -320,6 +347,7 @@ export function ProjectsShowcase() {
                       if (!s) return;
                       const dx = event.clientX - s.x;
                       if (Math.abs(dx) > 60) changeImage(dx < 0 ? 1 : -1);
+                      else if (Math.abs(dx) <= 8) setFullscreen(true);
                     }}
                     onWheel={(event) => {
                       const now = Date.now();
@@ -384,13 +412,20 @@ export function ProjectsShowcase() {
                       <p className="mt-2 text-[13px] leading-snug text-muted-foreground">
                         {openProject.description}
                       </p>
-                      <div className="mt-3 border-y border-border py-3">
-                        <div>
-                          <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
-                            Detalhes
-                          </p>
-                          <p className="mt-1 text-xs font-medium text-navy">{openProject.detail}</p>
-                        </div>
+                      <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 border-y border-border py-3">
+                        {[
+                          { rotulo: "Área construída", valor: openProject.info.area },
+                          { rotulo: "Programa", valor: openProject.info.programa },
+                          { rotulo: "Localização", valor: openProject.info.localizacao },
+                          { rotulo: "Ano do projeto", valor: openProject.info.ano },
+                        ].map((item) => (
+                          <div key={item.rotulo}>
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
+                              {item.rotulo}
+                            </p>
+                            <p className="mt-1 text-xs font-medium text-navy">{item.valor}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
@@ -430,6 +465,32 @@ export function ProjectsShowcase() {
                     </div>
                   </aside>
                 </div>
+
+                {fullscreen && (
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={`Foto ampliada: ${openProject.name}, imagem ${activeImage + 1}`}
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-md sm:p-8"
+                    onClick={() => setFullscreen(false)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setFullscreen(false)}
+                      aria-label="Fechar foto ampliada"
+                      className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:right-6 sm:top-6"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                    <img
+                      src={openProject.images[activeImage]}
+                      alt={`${openProject.name}, imagem ${activeImage + 1}`}
+                      decoding="async"
+                      className="max-h-[90dvh] w-auto max-w-full rounded-sm object-contain shadow-2xl"
+                      onClick={(event) => event.stopPropagation()}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             </>
