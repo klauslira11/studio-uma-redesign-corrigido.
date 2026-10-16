@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { depoimentos, type Depoimento } from "../data/depoimentos";
-import { isLowFxDevice } from "../hooks/use-low-fx";
 
 function Cartao({ item, oculto = false }: { item: Depoimento; oculto?: boolean }) {
   const cartao = (
@@ -59,9 +58,8 @@ export function Depoimentos({ whatsappUrl }: { whatsappUrl: string }) {
 
   useEffect(() => {
     const consulta = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const calcular = () => consulta.matches || isLowFxDevice();
-    setMovimentoReduzido(calcular());
-    const aoMudar = () => setMovimentoReduzido(calcular());
+    setMovimentoReduzido(consulta.matches);
+    const aoMudar = () => setMovimentoReduzido(consulta.matches);
     consulta.addEventListener("change", aoMudar);
     return () => consulta.removeEventListener("change", aoMudar);
   }, []);

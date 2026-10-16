@@ -45,7 +45,7 @@ type Project = {
   description: string;
   cover: string;
   images: string[];
-  info: ProjectInfo;
+  info?: ProjectInfo | undefined;
 };
 
 function montarProjeto(
@@ -53,7 +53,7 @@ function montarProjeto(
   pasta: string,
   detail: string,
   description: string,
-  info: ProjectInfo,
+  info?: ProjectInfo,
 ): Project {
   const images = fotosDoProjeto(pasta);
   return { name, detail, description, cover: images[2] ?? images[0] ?? "", images, info };
@@ -122,6 +122,26 @@ const projects: Project[] = [
     "Residencial · Guaíra-SP · 2026 · 9 m²",
     "Projetado para acompanhar o universo infantil, este dormitório combina funcionalidade, conforto e diversão em um ambiente acolhedor. A marcenaria planejada, a paleta de cores suaves e os detalhes lúdicos foram cuidadosamente pensados para estimular a imaginação da criança, criando um espaço agradável para brincar, estudar e descansar.",
     { area: "9 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
+  ),
+  montarProjeto(
+    "Projeto Áureo",
+    "Áureo",
+    "Comercial · Guaíra-SP · 2026 · 12 m²",
+    "Este projeto de interiores para um escritório de advocacia foi desenvolvido para transmitir sobriedade, elegância e profissionalismo. A composição entre tons escuros, madeira e detalhes dourados, aliada à iluminação acolhedora e às formas marcantes, cria ambientes sofisticados e contemporâneos, reforçando uma atmosfera de confiança, solidez e autoridade.",
+    { area: "12 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
+  ),
+  montarProjeto(
+    "Projeto Colorê",
+    "Colorê",
+    "Comercial/Residencial · Guaíra-SP · 2026 · 35 m²",
+    "Este projeto de interiores residencial foi desenvolvido para criar ambientes acolhedores, leves e cheios de personalidade. A combinação de cores, estampas, madeira e elementos afetivos traz identidade aos espaços, enquanto cada ambiente recebe soluções pensadas para sua função e para a rotina dos moradores, resultando em uma casa confortável, funcional e autêntica.",
+    { area: "35 m²", programa: "Comercial/Residencial", localizacao: "Guaíra-SP", ano: "2026" },
+  ),
+  montarProjeto(
+    "Projeto Kai-Kan",
+    "Projeto Kai-Kan",
+    "",
+    "",
   ),
 ];
 
@@ -409,9 +429,12 @@ export function ProjectsShowcase() {
                       <DialogDescription className="sr-only">
                         Galeria de imagens do projeto {openProject.name}
                       </DialogDescription>
-                      <p className="mt-2 text-[13px] leading-snug text-muted-foreground">
-                        {openProject.description}
-                      </p>
+                      {openProject.description && (
+                        <p className="mt-2 text-[13px] leading-snug text-muted-foreground">
+                          {openProject.description}
+                        </p>
+                      )}
+                      {openProject.info && (
                       <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 border-y border-border py-3">
                         {[
                           { rotulo: "Área construída", valor: openProject.info.area },
@@ -427,6 +450,7 @@ export function ProjectsShowcase() {
                           </div>
                         ))}
                       </div>
+                      )}
                     </div>
 
                     <div className="rounded-2xl border border-card/70 bg-card/80 p-3 shadow-lg backdrop-blur-xl">

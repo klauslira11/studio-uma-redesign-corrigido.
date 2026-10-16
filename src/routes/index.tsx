@@ -23,7 +23,6 @@ import { galeria } from "../data/galeria";
 import { ProjectsShowcase } from "../components/projects-showcase";
 import { Depoimentos } from "../components/depoimentos";
 import { BeforeAfter } from "../components/before-after";
-import { useLowFx } from "../hooks/use-low-fx";
 import {
   Accordion,
   AccordionContent,
@@ -125,8 +124,7 @@ function TextoDigitado({ texto, className = "" }: { texto: string; className?: s
   const [n, setN] = useState(0);
   const reduzido =
     typeof window !== "undefined" &&
-    (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      document.documentElement.classList.contains("low-fx"));
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
     const el = ref.current;
@@ -170,7 +168,6 @@ function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
-  useLowFx();
 
   useEffect(() => {
     const onScroll = () => {
