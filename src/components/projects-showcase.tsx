@@ -75,8 +75,8 @@ const projects: Project[] = [
     { area: "40 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2025" },
   ),
   montarProjeto(
-    "Recepção Bela",
-    "Recepção Bela",
+    "Recepção Bella",
+    "Recepção Bella",
     "Recepção de clínica",
     "Primeiro contato entre a clínica e seus pacientes, projetado para transmitir leveza, elegância e acolhimento. Formas curvas, iluminação indireta e paleta de tons claros criam uma atmosfera sofisticada e atemporal.",
     { area: "20 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
@@ -89,8 +89,8 @@ const projects: Project[] = [
     { area: "45 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
   ),
   montarProjeto(
-    "Quarto Serene",
-    "Quarto Serene",
+    "Quarto Serena",
+    "Quarto Serena",
     "Dormitório adolescente",
     "Dormitório que reflete a personalidade do adolescente, unindo delicadeza, funcionalidade e design contemporâneo. Cores neutras e marcenaria planejada criam um espaço confortável, organizado e acolhedor.",
     { area: "9 m²", programa: "Residencial", localizacao: "Guaíra-SP", ano: "2026" },
