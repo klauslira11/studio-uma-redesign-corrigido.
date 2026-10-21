@@ -36,7 +36,7 @@ const WHATSAPP_URL =
 // ============================================================
 // DADOS DO RODAPÉ (campos editáveis)
 // ============================================================
-const EMAIL_CONTATO = "contato@umastudio.com.br";
+const EMAIL_CONTATO = "studiouma25@gmail.com";
 const TELEFONE_EXIBICAO = "(16) 99751-3357";
 const INSTAGRAM_URL = "https://www.instagram.com/_studiouma/";
 const CIDADE_ATENDIMENTO = "Ribeirão Preto · atendimento em todo o Brasil";
