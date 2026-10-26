@@ -332,8 +332,18 @@ function LandingPage() {
           <h2 className="sr-only">Uma ideia que se transforma!</h2>
           <div aria-hidden="true" className="parallax-clip">
             <div
-              className="parallax-fixed-bg"
-              style={{ backgroundImage: `url(${slogan})` }}
+              className="parallax-fixed-bg lg:hidden"
+              style={{
+                backgroundImage: `url(${slogan})`,
+                backgroundPosition: "calc(60% + 1cm) center",
+              }}
+            />
+            <div
+              className="parallax-fixed-bg hidden lg:block"
+              style={{
+                backgroundImage: `url(${slogan})`,
+                backgroundPosition: "center center",
+              }}
             />
           </div>
           <div className="relative min-h-[70svh] lg:min-h-[80vh]" />
