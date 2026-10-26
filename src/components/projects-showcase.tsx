@@ -25,11 +25,11 @@ const todasAsFotos = import.meta.glob<string>("../assets/projetos/*/*.{jpg,jpeg,
   import: "default",
 });
 
-function fotosDoProjeto(pasta: string): string[] {
+function fotosDoProjeto(pasta: string): { caminho: string; url: string }[] {
   return Object.entries(todasAsFotos)
     .filter(([caminho]) => caminho.includes(`/projetos/${pasta}/`))
     .sort(([a], [b]) => a.localeCompare(b, "pt-BR", { numeric: true }))
-    .map(([, url]) => url);
+    .map(([caminho, url]) => ({ caminho, url }));
 }
 
 type ProjectInfo = {
@@ -44,6 +44,7 @@ type Project = {
   detail: string;
   description: string;
   cover: string;
+  coverPosition?: string | undefined;
   images: string[];
   info?: ProjectInfo | undefined;
 };
@@ -54,9 +55,19 @@ function montarProjeto(
   detail: string,
   description: string,
   info?: ProjectInfo,
+  coverPosition?: string,
 ): Project {
-  const images = fotosDoProjeto(pasta);
-  return { name, detail, description, cover: images[2] ?? images[0] ?? "", images, info };
+  const itens = fotosDoProjeto(pasta);
+  const images = itens.map((item) => item.url);
+
+  // Procura imagem cujo nome de arquivo seja "capa" + número (ex: capa1.jpg, capa4.png)
+  const itemCapa = itens.find((item) => {
+    const nomeArquivo = item.caminho.split("/").pop() ?? "";
+    return /^capa\d*\.(jpe?g|png|webp)$/i.test(nomeArquivo);
+  });
+
+  const cover = itemCapa ? itemCapa.url : (images[0] ?? "");
+  return { name, detail, description, cover, coverPosition, images, info };
 }
 
 const projects: Project[] = [
@@ -80,6 +91,7 @@ const projects: Project[] = [
     "Recepção de clínica",
     "Primeiro contato entre a clínica e seus pacientes, projetado para transmitir leveza, elegância e acolhimento. Formas curvas, iluminação indireta e paleta de tons claros criam uma atmosfera sofisticada e atemporal.",
     { area: "20 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
+    "left center",
   ),
   montarProjeto(
     "Trio",
@@ -101,6 +113,7 @@ const projects: Project[] = [
     "Barbearia",
     "Transformação da barbearia em um espaço de convivência. Design moderno e sofisticado com marcenaria de cores sóbrias, criando uma atmosfera autêntica que reforça o conforto do ambiente.",
     { area: "24 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2026" },
+    "left center",
   ),
   montarProjeto(
     "Dois Tons",
@@ -115,6 +128,7 @@ const projects: Project[] = [
     "Comercial · Guaíra-SP · 2025 · 35 m²",
     "Projeto de interiores para salão de beleza, desenvolvido para traduzir a identidade da marca por meio de uma atmosfera acolhedora, elegante e funcional, proporcionando conforto e uma experiência única aos clientes.",
     { area: "35 m²", programa: "Comercial", localizacao: "Guaíra-SP", ano: "2025" },
+    "left center",
   ),
   montarProjeto(
     "Quarto Imagine",
@@ -133,15 +147,17 @@ const projects: Project[] = [
   montarProjeto(
     "Projeto Colorê",
     "Colorê",
-    "Comercial/Residencial · Guaíra-SP · 2026 · 35 m²",
+    "Residencial · Campinas-SP · 2026 · 55 m²",
     "Este projeto de interiores residencial foi desenvolvido para criar ambientes acolhedores, leves e cheios de personalidade. A combinação de cores, estampas, madeira e elementos afetivos traz identidade aos espaços, enquanto cada ambiente recebe soluções pensadas para sua função e para a rotina dos moradores, resultando em uma casa confortável, funcional e autêntica.",
-    { area: "35 m²", programa: "Comercial/Residencial", localizacao: "Guaíra-SP", ano: "2026" },
+    { area: "55 m²", programa: "Residencial", localizacao: "Campinas-SP", ano: "2026" },
   ),
   montarProjeto(
     "Projeto Kai-Kan",
     "Projeto Kai-Kan",
-    "",
-    "",
+    "Institucional · Guaíra-SP · 2026",
+    "O projeto de revitalização da fachada do Kai-Kan, em Guaíra-SP, teve como objetivo valorizar a identidade e a tradição da cultura japonesa. A proposta trouxe uma nova atmosfera ao espaço, com paisagismo, iluminação e elementos arquitetônicos que unem tradição, elegância e modernidade, tornando a entrada mais acolhedora e marcante.",
+    { area: "Revitalização", programa: "Institucional", localizacao: "Guaíra-SP", ano: "2026" },
+    "55% center",
   ),
 ];
 
@@ -238,7 +254,8 @@ export function ProjectsShowcase() {
                 >
                   <img
                     src={project.cover}
-                      alt={`${project.name}`}
+                    alt={`${project.name}`}
+                    style={project.coverPosition ? { objectPosition: project.coverPosition } : undefined}
                     className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.025] ${
                       activeProject === index ? "scale-100" : "scale-[0.94]"
                     }`}
