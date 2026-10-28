@@ -16,6 +16,7 @@ import logo from "../assets/logo.png";
 import logo1 from "../assets/logo1.webp";
 import cabecalhoBg from "../assets/cabecalho.webp";
 import slogan from "../assets/slogan.jpg";
+import sloganMobile from "../assets/sloganm.webp";
 import antesImg from "../assets/ad/1.jpg";
 import depoisImg from "../assets/ad/2.jpg";
 import { galeria } from "../data/galeria";
@@ -334,8 +335,8 @@ function LandingPage() {
             <div
               className="parallax-fixed-bg lg:hidden"
               style={{
-                backgroundImage: `url(${slogan})`,
-                backgroundPosition: "calc(60% + 1.2cm) center",
+                backgroundImage: `url(${sloganMobile})`,
+                backgroundPosition: "center center",
               }}
             />
             <div
@@ -346,7 +347,7 @@ function LandingPage() {
               }}
             />
           </div>
-          <div className="relative min-h-[70svh] lg:min-h-[80vh]" />
+          <div className="relative min-h-[60svh] lg:min-h-[80vh]" />
         </section>
 
         <section id="empresa" className="bg-white py-20 sm:py-28 lg:py-36">
